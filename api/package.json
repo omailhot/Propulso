@@ -2,7 +2,7 @@
   "name": "propulso",
   "version": "1.0.0",
   "description": "test_technique",
-  "main": "main.js",
+  "main": "main.ts",
   "scripts": {
     "start": "npx nodemon ./src/main.ts"
   },

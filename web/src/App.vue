@@ -1,13 +1,11 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+<script setup lang="ts">
 import Navbar from "./components/Navbar.vue";
-import { Button } from "@/components/ui/button";
+import Dashboard from "./components/dashboard/Dashboard.vue";
 </script>
 
 <template>
   <Navbar />
   <div class="container">
-    <HelloWorld msg="Vite + Vue" />
-    <Button>Click me</Button>
+    <Dashboard class="pt-4" />
   </div>
 </template>
