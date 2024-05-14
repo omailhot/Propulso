@@ -1,41 +1,42 @@
 <script setup lang="ts">
 import { BarChart } from "@/components/ui/chart-bar";
+import { label } from "@unovis/ts/components/axis/style";
 
 const data = [
   {
     name: "Jan",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "Feb",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "Mar",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "Apr",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "May",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "Jun",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
   {
     name: "Jul",
-    total: Math.floor(Math.random() * 2000) + 500,
-    predicted: Math.floor(Math.random() * 2000) + 500,
+    2021: Math.floor(Math.random() * 2000) + 500,
+    2022: Math.floor(Math.random() * 2000) + 500,
   },
 ];
 </script>
@@ -44,7 +45,8 @@ const data = [
   <BarChart
     :data="data"
     index="name"
-    :categories="['total', 'predicted']"
+    :categories="['2021', '2022']"
+		:colors="['#ffa000', '#ff0035']"
     :y-formatter="
       (tick, i) => {
         return typeof tick === 'number'
@@ -52,5 +54,6 @@ const data = [
           : '';
       }
     "
+		:rounded-corners="4"
   />
 </template>

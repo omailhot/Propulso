@@ -21,11 +21,15 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    
     extend: {
+      backgroundImage: (theme) => ({
+        'gradient-primary': `linear-gradient(to right, ${theme('colors.gradient1')} 20%, ${theme('colors.gradient2')}, ${theme('colors.gradient3')})`,
+      }),
       colors: {
-        left: "ffa000",
-        middle: "ff4b00",
-        right: "ff0035",
+        gradient1: "#ffa000",
+        gradient2: "#ff4b00",
+        gradient3: "#ff0035",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

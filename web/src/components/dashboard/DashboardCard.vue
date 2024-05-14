@@ -9,7 +9,11 @@ defineProps({
 <template>
   <Card>
     <CardContent>
-      <h2 class="pt-4 pl-2 font-semibold">{{ title }}</h2>
+      <h2
+        class="text-white pl-2 pt-4 font-semibold"
+      >
+        {{ title }}
+      </h2>
       <slot />
     </CardContent>
   </Card>

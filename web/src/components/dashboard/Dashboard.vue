@@ -10,7 +10,9 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div :class="cn('flex flex-col gap-4 lg:grid lg:grid-cols-2', props.class)">
+  <div
+    :class="cn('mb-4 flex flex-col gap-4 lg:grid lg:grid-cols-2', props.class)"
+  >
     <DashboardCard title="Visites par mois"
       ><DashboardChartBar />
     </DashboardCard>
@@ -24,9 +26,13 @@ const props = defineProps<{
       ><DashboardChartArea />
     </DashboardCard>
     <DashboardCard title="Nombre de jour moyen entre les visites des visiteurs">
-      <h2 class="flex items-center justify-center p-16 text-6xl font-semibold">
-        91
-      </h2>
+      <div class="text-center">
+        <h2
+          class="bg-gradient-primary inline-block bg-clip-text p-16 text-7xl font-semibold text-transparent"
+        >
+          91
+        </h2>
+      </div>
     </DashboardCard>
   </div>
 </template>
