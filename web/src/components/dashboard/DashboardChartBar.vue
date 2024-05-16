@@ -46,7 +46,7 @@ const data = [
     :data="data"
     index="name"
     :categories="['2021', '2022']"
-		:colors="['#ffa000', '#ff0035']"
+    :colors="['#ffa000', '#ff0035']"
     :y-formatter="
       (tick, i) => {
         return typeof tick === 'number'
@@ -54,6 +54,6 @@ const data = [
           : '';
       }
     "
-		:rounded-corners="4"
+    :rounded-corners="4"
   />
 </template>

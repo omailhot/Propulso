@@ -1,20 +1,15 @@
-import pg from "pg";
-import { Point } from "./type";
+import { Pool } from "pg";
 
-const { Client } = pg;
-const client = new Client();
+require("dotenv").config();
 
-export const getPoints = async (): Promise<Point[]> => {
-  await client.connect();
-
-  client.connect((err) => {
-    client.query("SELECT * FROM points", (err, res) => {
-      console.log(err ? err.stack : res.rows[0].message); // Hello World!
-      client.end();
-			if (res)
-      return res.rows;
-    });
-  });
-
-  return [];
+export const cn = {
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
 };
+
+export const pool = new Pool(cn);
+
+export default pool;

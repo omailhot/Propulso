@@ -1,11 +1,17 @@
-// ./routes/index.js
-import visites from './visites.ts'
-import photos from './photos.js'
- 
-const mountRoutes = (app) => {
-  app.use('/users', users)
-  app.use('/photos', photos)
-  // etc..
-}
- 
-export default mountRoutes
+import express from "express";
+import visitesRouter from "./visites";
+import { initPoints } from "../db/points";
+
+const appRouter = express.Router();
+
+appRouter.get("/", async (req, res, next) => {
+  const result = await initPoints();
+  res.send(result);
+});
+
+const mountRoutes = (app: express.Application) => {
+  app.use("/init", appRouter); // Initialiser la base de données, créer la table selon le fichier CSV reçu
+  app.use("/visites", visitesRouter);
+};
+
+export default mountRoutes;
