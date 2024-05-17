@@ -1,56 +1,35 @@
 <script setup lang="ts">
 import { BarChart } from "@/components/ui/chart-bar";
-import { label } from "@unovis/ts/components/axis/style";
+import { computed } from "vue";
 
-const data = [
-  {
-    name: "Jan",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "Feb",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "Mar",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "Apr",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "May",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "Jun",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-  {
-    name: "Jul",
-    2021: Math.floor(Math.random() * 2000) + 500,
-    2022: Math.floor(Math.random() * 2000) + 500,
-  },
-];
+const props = defineProps<{
+  data: {
+    year: number;
+    month: number;
+    value: number;
+  }[],
+  color: string;
+}>();
+
+const data = computed(() => {
+  return props.data.map((d) => ({
+    name: `${new Date(2022, d.month - 1, 1).toLocaleString("fr", { month: "long" })} ${d.year}`,
+    total: d.value,
+  }));
+});
 </script>
 
 <template>
   <BarChart
     :data="data"
     index="name"
-    :categories="['2021', '2022']"
-    :colors="['#ffa000', '#ff0035']"
+    :categories="['total']"
+    :colors="[color]"
+    :show-legend="true"
     :y-formatter="
       (tick, i) => {
         return typeof tick === 'number'
-          ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
+          ? `${new Intl.NumberFormat('fr').format(tick).toString()}`
           : '';
       }
     "

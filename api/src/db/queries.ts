@@ -48,7 +48,7 @@ export async function getAverageVisitDuration() {
   return res.rows;
 }
 
-export async function getAverageDaysBetweenVisitorsVisit() {
+export async function getAverageDaysBetweenVisitorsVisits() {
   const query = `
   WITH numbered_visits AS (
     SELECT
@@ -63,7 +63,7 @@ export async function getAverageDaysBetweenVisitorsVisit() {
             propulso_id,
             start_time,
             previous_visit_time,
-            start_time - previous_visit_time AS days_between
+            EXTRACT(EPOCH FROM (start_time - previous_visit_time)) / 86400 AS days_between
         FROM
             numbered_visits
     )

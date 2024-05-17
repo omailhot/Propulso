@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getAverageDaysBetweenVisitorsVisit,
+  getAverageDaysBetweenVisitorsVisits,
   getAverageMoveSpeedPerMonth,
   getAverageVisitDuration,
   getUniqueVisitorsPerMonth,
@@ -25,12 +25,12 @@ metricsRouter.get("/visitDuration", async (req, res, next) => {
 });
 
 metricsRouter.get("/moveSpeedPerMonth", async (req, res, next) => {
-  const result = getAverageMoveSpeedPerMonth()
+  const result = await getAverageMoveSpeedPerMonth();
   res.send(result);
 });
 
-metricsRouter.get("/daysBetweenVisitorsVisit", async (req, res, next) => {
-  const result = await getAverageDaysBetweenVisitorsVisit();
+metricsRouter.get("/daysBetweenVisitorsVisits", async (req, res, next) => {
+  const result = await getAverageDaysBetweenVisitorsVisits();
   res.send(result);
 });
 
