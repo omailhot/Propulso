@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import DashboardCard from "./DashboardCard.vue";
 import DashboardChartArea from "./DashboardChartArea.vue";
 import DashboardChartBar from "./DashboardChartBar.vue";
+import LoadingSpinner from "../ui/loading-spinner/LoadingSpinner.vue";
 
 import Skeleton from "@/components/ui/skeleton/Skeleton.vue";
 import {
@@ -54,7 +55,7 @@ const daysBetweenVisitorsVisits = useQuery({
         v-if="visitsPerMonthQuery.data.value"
         :data="visitsPerMonthQuery.data.value"
       />
-      <Skeleton v-else class="h-100 w-100 mx-auto mt-12 rounded-md" />
+      <LoadingSpinner v-else class="m-auto h-full" />
     </DashboardCard>
     <DashboardCard title="Visiteurs par mois">
       <DashboardChartBar
@@ -62,7 +63,7 @@ const daysBetweenVisitorsVisits = useQuery({
         v-if="visitorsPerMonthQuery.data.value"
         :data="visitorsPerMonthQuery.data.value"
       />
-      <Skeleton v-else class="h-100 w-100 mx-auto mt-12 rounded-md" />
+      <LoadingSpinner v-else class="m-auto h-full" />
     </DashboardCard>
 
     <DashboardCard title="Vitesse moyenne des déplacements par mois (en m/s)">
@@ -71,7 +72,7 @@ const daysBetweenVisitorsVisits = useQuery({
         v-if="moveSpeedPerMonthQuery.data.value"
         :data="moveSpeedPerMonthQuery.data.value"
       />
-      <Skeleton v-else class="h-100 w-100 mx-auto mt-12 rounded-md" />
+      <LoadingSpinner v-else class="mx-auto h-full" />
     </DashboardCard>
     <div class="flex flex-col gap-4">
       <DashboardCard title="Durée moyenne des visites" class="flex-1">

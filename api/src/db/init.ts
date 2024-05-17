@@ -7,24 +7,43 @@ import { calculateDistance } from "../lib/utils.ts";
 var format = require("pg-format");
 
 let totalVisits = 0;
+let batchCount = 0;
 
-export async function initPoints() {
+let poolInUse = false;
+export async function initDatabase() {
+  if (poolInUse) {
+    console.log("Database initialization is already in progress.");
+    return {
+      status: "error",
+      message: "Database initialization is already in progress.",
+    };
+  }
+
+  poolInUse = true;
   const client = await pool.connect();
+
+  console.log("Initializing database");
+  await client.query("DROP TABLE IF EXISTS visits");
+  await client.query(
+    "CREATE TABLE IF NOT EXISTS visits (id SERIAL PRIMARY KEY, propulso_id VARCHAR(255), start_time timestamp, end_time timestamp, duration integer, month integer, distance numeric)"
+  );
   try {
-    await client.query("DROP TABLE IF EXISTS visits");
-    await client.query(
-      "CREATE TABLE IF NOT EXISTS visits (id SERIAL PRIMARY KEY, propulso_id VARCHAR(255), start_time timestamp, end_time timestamp, duration integer, month integer, distance numeric)"
-    );
+    batchCount = 0;
     totalVisits = 0;
     const start = Date.now();
-    const res = await insertData();
+    await insertData();
     console.log("Time taken:", Date.now() - start, "ms");
     console.log("Total visits inserted:", totalVisits);
-    return res;
+    return {
+      status: "success",
+      duration: (Date.now() - start) / 1000,
+      totalVisits: totalVisits,
+    };
   } catch (error) {
-    console.error("Error initializing database", error);
+    return { status: "error" };
   } finally {
     await client.release();
+    poolInUse = false;
   }
 }
 
@@ -86,14 +105,12 @@ const insertData = async () => {
         if (currentVisit.length > 0) {
           visitBatch.push(currentVisit);
           processVisit(visitBatch); // Process the last batch
+          resolve("Data inserted successfully");
         }
-
-        resolve("Data inserted successfully");
       });
   });
 };
 
-let i = 0;
 let visitPerBatch = 0;
 const processVisit = async (visits: Point[][]) => {
   const visitBatch: Visit[] = [];
@@ -163,10 +180,10 @@ const processVisit = async (visits: Point[][]) => {
 
   visitPerBatch += visitBatch.length;
   totalVisits += visitBatch.length;
-  i++;
-  if (i % 1000 === 0) {
+  batchCount++;
+  if (batchCount % 1000 === 0) {
     console.log(
-      i + " batches of 100 visits inserted. batch size:",
+      batchCount + " batches of 100 visits inserted. batch size:",
       visitPerBatch
     );
     visitPerBatch = 0;

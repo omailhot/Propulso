@@ -67,6 +67,13 @@ const legendItems = ref<BulletLegendItemInterface[]>(
   })),
 );
 
+const yDomain = computed(() => {
+  const yValues = props.data.flatMap((d) =>
+    props.categories.map((category) => d[category]),
+  );
+  return [Math.min(...yValues), Math.max(...yValues)];
+});
+
 const isMounted = useMounted();
 
 function handleLegendItemClick(d: BulletLegendItemInterface, i: number) {
@@ -97,6 +104,7 @@ const selectorsBar = computed(() =>
       :data="data"
       :style="{ height: isMounted ? '100%' : 'auto' }"
       :margin="margin"
+      :y-domain="yDomain"
     >
       <ChartCrosshair
         v-if="showTooltip"
@@ -128,6 +136,7 @@ const selectorsBar = computed(() =>
         :tick-format="xFormatter ?? ((v: number) => data[v]?.[index])"
         :grid-line="false"
         :tick-line="false"
+        :domain-line="false"
         tick-text-color="hsl(var(--vis-text-color))"
       />
       <VisAxis
