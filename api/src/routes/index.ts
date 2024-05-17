@@ -1,6 +1,6 @@
 import express from "express";
-import visitesRouter from "./visites";
-import { initPoints } from "../db/points";
+import { initPoints } from "../db/init";
+import metricsRouter from "./metrics";
 
 const appRouter = express.Router();
 
@@ -11,7 +11,7 @@ appRouter.get("/", async (req, res, next) => {
 
 const mountRoutes = (app: express.Application) => {
   app.use("/init", appRouter); // Initialiser la base de données, créer la table selon le fichier CSV reçu
-  app.use("/visites", visitesRouter);
+  app.use("/metrics", metricsRouter); // Récupérer les métriques demandées (1 à 5)
 };
 
 export default mountRoutes;
