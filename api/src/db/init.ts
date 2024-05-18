@@ -7,7 +7,7 @@ import { calculateDistance } from "../lib/utils.ts";
 var format = require("pg-format");
 
 let totalVisits = 0;
-let batchCount = 0;
+const batch_size = 5000; // nombre de visites processées à la fois
 
 let poolInUse = false;
 export async function initDatabase() {
@@ -28,7 +28,6 @@ export async function initDatabase() {
     "CREATE TABLE IF NOT EXISTS visits (id SERIAL PRIMARY KEY, propulso_id VARCHAR(255), start_time timestamp, end_time timestamp, duration integer, month integer, distance numeric)"
   );
   try {
-    batchCount = 0;
     totalVisits = 0;
     const start = Date.now();
     await insertData();
@@ -50,7 +49,6 @@ export async function initDatabase() {
 const insertData = async () => {
   return new Promise((resolve, reject) => {
     let visitBatch: Point[][] = [];
-    let batch_size = 100; // number of unique ids processed at a time
     let currentVisit: Point[] = [];
     let lastDelta: number | null = null;
     let lastId: string | null = null;
@@ -78,7 +76,7 @@ const insertData = async () => {
         const endOfVisit = lastDelta <= 0 && delta_time > 0;
         const startOfNewVisit = lastDelta < 0 && delta_time >= 0;
         if (userChanged || endOfVisit || startOfNewVisit) {
-          // Process last visit
+          // Process visit
           if (currentVisit.length > 0) {
             visitBatch.push([...currentVisit]);
             currentVisit = [];
@@ -104,15 +102,14 @@ const insertData = async () => {
       .on("end", async () => {
         if (currentVisit.length > 0) {
           visitBatch.push(currentVisit);
-          processVisit(visitBatch); // Process the last batch
+          await processVisit(visitBatch); // Process the last batch
           resolve("Data inserted successfully");
         }
       });
   });
 };
 
-let visitPerBatch = 0;
-const processVisit = async (visits: Point[][]) => {
+const processVisit = (visits: Point[][]) => {
   const visitBatch: Visit[] = [];
   // Process each visit
   visits.forEach((v) => {
@@ -125,8 +122,7 @@ const processVisit = async (visits: Point[][]) => {
     let visitEnd: Date;
     let duration = 0;
     let month = 0;
-    let distance = 0; // distance
-    // speed
+    let distance = 0;
 
     //Pour calculer la durée de la visite en excluant les points hors de la zone
     const pointsDansLaZone = sortedPoints.filter(
@@ -153,6 +149,7 @@ const processVisit = async (visits: Point[][]) => {
     visitEnd = new Date(
       Number(pointsDansLaZone[pointsDansLaZone.length - 1].timestamp) * 1000
     );
+
     duration = (visitEnd.getTime() - visitStart.getTime()) / 1000;
     month = visitStart.getMonth() + 1;
 
@@ -178,16 +175,8 @@ const processVisit = async (visits: Point[][]) => {
     ])
   );
 
-  visitPerBatch += visitBatch.length;
   totalVisits += visitBatch.length;
-  batchCount++;
-  if (batchCount % 1000 === 0) {
-    console.log(
-      batchCount + " batches of 100 visits inserted. batch size:",
-      visitPerBatch
-    );
-    visitPerBatch = 0;
-  }
+  console.log(`visits inserted:`, totalVisits);
 
-  await pool.query(query);
+  pool.query(query);
 };

@@ -13,7 +13,7 @@ import router from "@/router";
         <h1
           class="inline-block bg-gradient-primary bg-clip-text text-2xl font-semibold text-transparent"
         >
-          Propulso - test technique
+          Propulso
         </h1>
       </RouterLink>
       <RouterLink to="/dashboard">
