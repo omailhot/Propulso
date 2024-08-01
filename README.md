@@ -10,7 +10,7 @@ DB_NAME=postgres <br>
 Note: Au besoin, installer pgAdmin 4, puis dans l'onglet Object -> Register -> Server avec les informations présentées ci-haut <br>
 
 
--Cloner le projet, \n
+-Cloner le projet, <br>
 -Insérer le fichier de donnée à la racine du projet et le renommer data.csv <br>
 -Ouvrir deux terminaux, Puis effectuer les commandes suivantes: <br>
 
