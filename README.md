@@ -15,16 +15,16 @@ Note: Au besoin, installer pgAdmin 4, puis dans l'onglet Object -> Register -> S
 -Ouvrir deux terminaux, Puis effectuer les commandes suivantes: <br>
 
 
-Terminal 1:
-cd api
-npm install
-npm start
+Terminal 1: <br>
+cd api <br>
+npm install <br>
+npm start <br>
 
 
-Terminal  2:
-cd web
-npm install
-npm run dev
+Terminal 2: <br>
+cd web <br>
+npm install <br>
+npm run dev <br>
 
 
 Si toute la configuration fonctionne, on peut ensuite ouvrir la page sur http://localhost:5173/
