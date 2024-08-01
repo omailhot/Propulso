@@ -1,18 +1,18 @@
-Pour commencer, créer une base de donnée PostgreSQL avec les informations suivante: \n
+Pour commencer, créer une base de donnée PostgreSQL avec les informations suivante: <br>
 
-DB_USER=postgres \n
-DB_PASSWORD=test \n
-DB_HOST=localhost \n
-DB_PORT=5432 \n
-DB_NAME=postgres \n
+DB_USER=postgres <br>
+DB_PASSWORD=test <br>
+DB_HOST=localhost <br>
+DB_PORT=5432 <br>
+DB_NAME=postgres <br>
 
 
-Note: Au besoin, installer pgAdmin 4, puis dans l'onglet Object -> Register -> Server avec les informations présentées ci-haut \n
+Note: Au besoin, installer pgAdmin 4, puis dans l'onglet Object -> Register -> Server avec les informations présentées ci-haut <br>
 
 
 -Cloner le projet, \n
--Insérer le fichier de donnée à la racine du projet et le renommer data.csv \n
--Ouvrir deux terminaux, Puis effectuer les commandes suivantes: \n
+-Insérer le fichier de donnée à la racine du projet et le renommer data.csv <br>
+-Ouvrir deux terminaux, Puis effectuer les commandes suivantes: <br>
 
 
 Terminal 1:
