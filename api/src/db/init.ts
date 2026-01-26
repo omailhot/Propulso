@@ -53,7 +53,7 @@ const insertData = async () => {
     let lastDelta: number | null = null;
     let lastId: string | null = null;
 
-    fs.createReadStream("../../data.csv")
+    fs.createReadStream("../data.csv")
       .pipe(
         parse({
           bom: true,
